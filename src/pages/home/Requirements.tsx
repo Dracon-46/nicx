@@ -18,7 +18,7 @@ const SPECS: { icon: ReactNode; label: string; value: string; note: string }[] =
   {
     icon: <HardDrive className="size-4" />,
     label: 'Espaço livre',
-    value: '≈ 10 GB',
+    value: '≈ 12 GB',
     note: 'Para o Nicx, o modelo de IA e as vozes.',
   },
   {

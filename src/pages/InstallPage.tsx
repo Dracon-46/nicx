@@ -115,7 +115,7 @@ const PARTS: { icon: ReactNode; name: string; what: string; size: string }[] = [
     icon: <Cpu className="size-4" />,
     name: 'Ollama',
     what: 'O motor que roda os modelos de IA no seu computador.',
-    size: '≈ 1 GB',
+    size: '≈ 1,6 GB',
   },
   {
     icon: <Brain className="size-4" />,
@@ -126,16 +126,16 @@ const PARTS: { icon: ReactNode; name: string; what: string; size: string }[] = [
   {
     icon: <AudioLines className="size-4" />,
     name: 'Vozes',
-    what: 'Reconhecimento de fala e a voz brasileira do Nicx.',
-    size: '≈ 500 MB',
+    what: 'Reconhecimento de fala e a voz brasileira do Nicx (opcional na instalação).',
+    size: '≈ 2 GB',
   },
 ];
 
 const SPEEDS = [
-  { speed: '300 Mbps', time: '≈ 5 min', pct: 12 },
-  { speed: '100 Mbps', time: '≈ 10 min', pct: 25 },
-  { speed: '50 Mbps', time: '≈ 20 min', pct: 50 },
-  { speed: '20 Mbps', time: '≈ 40 min', pct: 100 },
+  { speed: '300 Mbps', time: '≈ 6 min', pct: 12 },
+  { speed: '100 Mbps', time: '≈ 15 min', pct: 25 },
+  { speed: '50 Mbps', time: '≈ 25 min', pct: 50 },
+  { speed: '20 Mbps', time: '≈ 55 min', pct: 100 },
 ];
 
 const STEPS: { icon: ReactNode; title: string; text: ReactNode }[] = [
@@ -311,7 +311,7 @@ export function InstallPage() {
             </p>
             <div className="rise relative z-10 mt-8 flex flex-col items-start gap-3" style={{ animationDelay: '240ms' }}>
               <DownloadButton size="lg" />
-              <p className="text-[13.5px] text-muted">Windows 10 e 11 (64 bits) · cerca de 5 GB de download</p>
+              <p className="text-[13.5px] text-muted">Windows 10 e 11 (64 bits) · cerca de 7,5 GB de download com voz</p>
             </div>
           </div>
           <div className="rise" style={{ animationDelay: '200ms' }}>
@@ -368,10 +368,10 @@ export function InstallPage() {
                   <tr>
                     <th scope="row" className="px-5 py-4 font-semibold text-ink sm:px-6">
                       Total
-                      <span className="block text-[13px] font-normal text-muted">Ocupa cerca de 10 GB depois de instalado.</span>
+                      <span className="block text-[13px] font-normal text-muted">Ocupa cerca de 12 GB depois de instalado.</span>
                     </th>
                     <td className="px-5 py-4 text-right align-top font-semibold whitespace-nowrap text-ink tabular-nums sm:px-6">
-                      ≈ 5 GB
+                      ≈ 7,5 GB
                     </td>
                   </tr>
                 </tfoot>
@@ -507,7 +507,7 @@ export function InstallPage() {
                 <MemoryStick className="size-4 text-accent" aria-hidden="true" /> 16 GB de RAM (8 GB com modelo menor)
               </span>
               <span className="inline-flex items-center gap-2">
-                <HardDrive className="size-4 text-accent" aria-hidden="true" /> ≈ 10 GB livres
+                <HardDrive className="size-4 text-accent" aria-hidden="true" /> ≈ 12 GB livres
               </span>
               <span className="inline-flex items-center gap-2">
                 <Cpu className="size-4 text-accent" aria-hidden="true" /> Sem placa de vídeo
