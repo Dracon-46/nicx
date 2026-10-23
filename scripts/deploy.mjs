@@ -14,6 +14,8 @@ rmSync(join(dist, '.git'), { recursive: true, force: true });
 git('init', '-q', '-b', 'gh-pages');
 git('add', '-A');
 git('commit', '-q', '-m', 'Publicar site');
-git('push', '-q', '-f', origin, 'gh-pages');
+// Authenticate with the GitHub CLI login, whatever credential helper is set.
+git('-c', 'credential.helper=', '-c', 'credential.helper=!gh auth git-credential',
+  'push', '-q', '-f', origin, 'gh-pages');
 rmSync(join(dist, '.git'), { recursive: true, force: true });
 console.log('Site publicado no branch gh-pages.');
