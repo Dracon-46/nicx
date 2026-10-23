@@ -1,0 +1,1 @@
+import{nn as e,rn as t}from"./primitives-DIJAizoT.js";import{t as n}from"./legal-docs-D6xLoOmr.js";var r=t();e((0,r.jsx)(n,{}));
