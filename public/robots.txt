@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dracon-46.github.io/nicx/sitemap.xml
