@@ -13,7 +13,9 @@ writeFileSync(join(dist, '.nojekyll'), '');
 rmSync(join(dist, '.git'), { recursive: true, force: true });
 git('init', '-q', '-b', 'gh-pages');
 git('add', '-A');
-git('commit', '-q', '-m', 'Publicar site');
+// Sempre na conta pessoal, qualquer que seja o git config da máquina.
+git('-c', 'user.name=Arthur G. Camzano', '-c', 'user.email=arthurgaspare@gmail.com',
+    'commit', '-q', '-m', 'Publicar site');
 // Authenticate with the GitHub CLI login, whatever credential helper is set.
 git('-c', 'credential.helper=', '-c', 'credential.helper=!gh auth git-credential',
   'push', '-q', '-f', origin, 'gh-pages');
