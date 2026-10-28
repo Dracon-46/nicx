@@ -16,8 +16,10 @@ git('add', '-A');
 // Sempre na conta pessoal, qualquer que seja o git config da máquina.
 git('-c', 'user.name=Arthur G. Camzano', '-c', 'user.email=arthurgaspare@gmail.com',
     'commit', '-q', '-m', 'Publicar site');
-// Authenticate with the GitHub CLI login, whatever credential helper is set.
-git('-c', 'credential.helper=', '-c', 'credential.helper=!gh auth git-credential',
+// Envia com o login da Dracon-46 sem trocar a conta ativa do gh (a do
+// trabalho às vezes fica ativa e o push dá 403).
+git('-c', 'credential.helper=',
+  '-c', 'credential.helper=!f() { echo username=Dracon-46; echo "password=$(gh auth token --user Dracon-46)"; }; f',
   'push', '-q', '-f', origin, 'gh-pages');
 rmSync(join(dist, '.git'), { recursive: true, force: true });
 console.log('Site publicado no branch gh-pages.');
