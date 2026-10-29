@@ -6,8 +6,8 @@ const SPECS: { icon: ReactNode; label: string; value: string; note: string }[] =
   {
     icon: <MonitorSmartphone className="size-4" />,
     label: 'Sistema',
-    value: 'Windows 10 ou 11',
-    note: 'Versão de 64 bits.',
+    value: 'Windows ou Mac',
+    note: 'Windows 10 ou 11 (64 bits), ou macOS 14 (Sonoma) ou mais novo.',
   },
   {
     icon: <MemoryStick className="size-4" />,

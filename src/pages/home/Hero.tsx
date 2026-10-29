@@ -1,7 +1,8 @@
 import { ArrowRight, BrainCircuit, Check, Languages, ShieldCheck, WifiOff } from 'lucide-react';
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import { NicxMascot } from '../../components/Mascot/NicxMascot';
-import { ButtonLink, DownloadButton } from '../../components/ui/primitives';
+import { DownloadActions } from '../../components/ui/Download';
+import { ButtonLink } from '../../components/ui/primitives';
 import type { MascotMood } from '../../lib/mascot';
 import { PAGE_HREF } from '../../site';
 import { AppPreview } from './AppPreview';
@@ -42,9 +43,9 @@ export function Hero() {
               <span className="ping-soft absolute inset-0 rounded-full bg-amber" />
               <span className="relative size-1.5 rounded-full bg-amber" />
             </span>
-            Em breve
+            Novo
           </span>
-          Instalador para Windows 10 e 11
+          Nicx 0.1.0 para Windows e Mac
           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
         </a>
 
@@ -97,11 +98,12 @@ export function Hero() {
           O Nicx é a inteligência artificial da Falkyria. Conversa em português, por texto e por voz, e
           roda inteiro no seu PC: sem mensalidade, sem nuvem e sem ninguém lendo as suas conversas.
         </p>
-        <div
-          className="rise relative z-10 mt-8 flex flex-col items-center gap-3 sm:flex-row"
+        <DownloadActions
+          size="lg"
+          onHover={react('listening')}
+          className="rise relative z-10 mt-8"
           style={d(320)}
         >
-          <DownloadButton size="lg" onHover={react('listening')} />
           <span onPointerEnter={() => setMood('happy')} onPointerLeave={() => setMood('idle')}>
             <ButtonLink
               href={PAGE_HREF.install}
@@ -114,12 +116,12 @@ export function Hero() {
               <ArrowRight className="size-4 transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true" />
             </ButtonLink>
           </span>
-        </div>
+        </DownloadActions>
         <ul
           className="rise mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[13.5px] text-muted"
           style={d(400)}
         >
-          {['Windows 10 e 11', 'Funciona sem placa de vídeo', 'Sem cadastro'].map((t) => (
+          {['Windows 10 e 11 · macOS 14+', 'Funciona sem placa de vídeo', 'Sem cadastro'].map((t) => (
             <li key={t} className="inline-flex items-center gap-1.5">
               <Check className="size-3.5 text-success" aria-hidden="true" strokeWidth={2.5} />
               {t}

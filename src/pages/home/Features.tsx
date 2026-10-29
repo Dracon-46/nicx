@@ -282,7 +282,7 @@ export function Features() {
           monitoramento agendado que avisa quando algo muda.
         </Feature>
         <Feature icon={<AppWindow className="size-4" />} title="No app ou no terminal" visual={<DesktopVisual />} delay={0.08}>
-          Um app para Windows com tudo isso numa janela. E, para quem curte, o terminal: <code className="rounded bg-surface-2 px-1 py-0.5 font-mono text-[13px] whitespace-nowrap text-ink">nicx chat</code>.
+          Um app para Windows e Mac com tudo isso numa janela. E, para quem curte, o terminal: <code className="rounded bg-surface-2 px-1 py-0.5 font-mono text-[13px] whitespace-nowrap text-ink">nicx chat</code>.
         </Feature>
       </div>
     </section>

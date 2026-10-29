@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { NicxMascot } from '../../components/Mascot/NicxMascot';
-import { ButtonLink, DownloadButton, Reveal } from '../../components/ui/primitives';
+import { DownloadActions } from '../../components/ui/Download';
+import { ButtonLink, Reveal } from '../../components/ui/primitives';
 import { PAGE_HREF } from '../../site';
 
 export function FinalCta() {
@@ -20,16 +21,15 @@ export function FinalCta() {
             Sua IA. Seu computador. Suas regras<span className="text-amber [-webkit-text-fill-color:var(--amber)]">.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-muted">
-            O instalador para Windows chega em breve. Enquanto isso, veja como vai ser simples colocar o Nicx para
-            rodar no seu PC.
+            Baixe o instalador para Windows ou instale no Mac com um comando no Terminal. Ele confere o seu computador
+            e cuida do resto.
           </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <DownloadButton size="lg" />
+          <DownloadActions size="lg" className="mt-9">
             <ButtonLink href={PAGE_HREF.install} variant="secondary" className="h-12 px-6 text-base">
               Como instalar
               <ArrowRight className="size-4 transition-transform group-hover/btn:translate-x-0.5" aria-hidden="true" />
             </ButtonLink>
-          </div>
+          </DownloadActions>
         </div>
       </Reveal>
     </section>

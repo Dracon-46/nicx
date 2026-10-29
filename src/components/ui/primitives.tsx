@@ -1,11 +1,11 @@
 import { m } from 'motion/react';
-import { useId, useRef, useState, type ComponentProps, type PointerEvent, type ReactNode } from 'react';
+import { useRef, type ComponentProps, type PointerEvent, type ReactNode } from 'react';
 import { cn } from '../../site';
 
-const BUTTON_BASE =
+export const BUTTON_BASE =
   'group/btn relative inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-[15px] font-medium tracking-[-0.01em] whitespace-nowrap transition-[background-color,box-shadow,color,transform] duration-200 ease-out active:scale-[0.98]';
 
-const VARIANTS = {
+export const VARIANTS = {
   primary:
     'bg-ink text-canvas shadow-[0_1px_0_0_rgb(255_255_255/0.18)_inset,0_10px_24px_-12px_rgb(0_0_0/0.55)] hover:bg-[color-mix(in_oklab,var(--ink)_86%,var(--canvas))]',
   secondary:
@@ -21,87 +21,6 @@ export function ButtonLink({
   ...rest
 }: ComponentProps<'a'> & { variant?: ButtonVariant }) {
   return <a className={cn(BUTTON_BASE, VARIANTS[variant], className)} {...rest} />;
-}
-
-/** The four-pane Windows mark, drawn as a plain glyph. */
-export function WindowsGlyph({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 16 16" className={className} aria-hidden="true" fill="currentColor">
-      <rect x="1" y="1" width="6.5" height="6.5" rx="0.6" />
-      <rect x="8.5" y="1" width="6.5" height="6.5" rx="0.6" />
-      <rect x="1" y="8.5" width="6.5" height="6.5" rx="0.6" />
-      <rect x="8.5" y="8.5" width="6.5" height="6.5" rx="0.6" />
-    </svg>
-  );
-}
-
-export function SoonBadge({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        'inline-flex h-5 items-center rounded-full bg-amber px-2 text-[11px] font-semibold tracking-[0.01em] text-[#1f1500]',
-        className,
-      )}
-    >
-      Em breve
-    </span>
-  );
-}
-
-/**
- * "Baixar para Windows": shown, but not available yet. Stays focusable so
- * keyboard and screen reader users get the explanation too.
- */
-export function DownloadButton({
-  className,
-  onHover,
-  size = 'md',
-}: {
-  className?: string;
-  onHover?: (on: boolean) => void;
-  size?: 'md' | 'lg';
-}) {
-  const [tip, setTip] = useState(false);
-  const tipId = useId();
-  const show = (on: boolean) => {
-    setTip(on);
-    onHover?.(on);
-  };
-  return (
-    <span className="relative inline-flex">
-      <button
-        type="button"
-        aria-disabled="true"
-        aria-describedby={tipId}
-        onClick={(e) => e.preventDefault()}
-        onPointerEnter={() => show(true)}
-        onPointerLeave={() => show(false)}
-        onFocus={() => show(true)}
-        onBlur={() => show(false)}
-        className={cn(
-          BUTTON_BASE,
-          VARIANTS.primary,
-          'cursor-not-allowed pr-2.5 hover:bg-ink active:scale-100',
-          size === 'lg' && 'h-12 pl-6 text-base',
-          className,
-        )}
-      >
-        <WindowsGlyph className="size-4 opacity-90" />
-        Baixar para Windows
-        <SoonBadge className="ml-1" />
-      </button>
-      <span
-        id={tipId}
-        role="tooltip"
-        className={cn(
-          'pointer-events-none absolute top-full left-1/2 z-20 mt-2.5 w-max max-w-[240px] -translate-x-1/2 rounded-lg border border-line bg-surface px-3 py-2 text-center text-[13px] leading-snug text-muted shadow-float transition-[opacity,transform] duration-200',
-          tip ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0',
-        )}
-      >
-        O instalador para Windows ainda não foi lançado. Ele chega em breve.
-      </span>
-    </span>
-  );
 }
 
 const EASE = [0.16, 1, 0.3, 1] as const;

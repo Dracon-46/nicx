@@ -16,12 +16,22 @@ import {
   PartyPopper,
   ScanSearch,
   Sparkles,
+  Terminal,
+  Trash2,
 } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { useId, useState, type ReactNode } from 'react';
 import { NicxMascot } from '../components/Mascot/NicxMascot';
 import { Shell } from '../components/Shell';
 import { Accordion, type AccordionItem } from '../components/ui/Accordion';
-import { DownloadButton, Eyebrow, Reveal, SectionHeader, SpotlightCard } from '../components/ui/primitives';
+import {
+  AppleGlyph,
+  CommandBox,
+  DownloadButton,
+  MAC_INSTALL_COMMAND,
+  MAC_INSTALL_COMMAND_VOICE,
+  MAC_REQUIREMENTS,
+} from '../components/ui/Download';
+import { ButtonLink, Eyebrow, Reveal, SectionHeader, SpotlightCard } from '../components/ui/primitives';
 import { cn, PAGE_HREF } from '../site';
 
 /* ── Installer window (illustration) ─────────────────────────────── */
@@ -144,8 +154,7 @@ const STEPS: { icon: ReactNode; title: string; text: ReactNode }[] = [
     title: 'Baixe o NicxSetup.exe',
     text: (
       <>
-        Quando o instalador sair, o botão “Baixar para Windows” deste site vai baixá-lo. Baixe sempre por aqui, nunca
-        de outros sites.
+        Clique em <strong>Baixar para Windows</strong>, aqui no site. Baixe sempre por aqui, nunca de outros sites.
       </>
     ),
   },
@@ -154,9 +163,10 @@ const STEPS: { icon: ReactNode; title: string; text: ReactNode }[] = [
     title: 'Abra o instalador',
     text: (
       <>
-        Dê dois cliques no arquivo. Se o Windows perguntar se o app pode fazer alterações, clique em{' '}
-        <strong>Sim</strong>. Se aparecer “O Windows protegeu o computador”, clique em{' '}
-        <strong>Mais informações</strong> e depois em <strong>Executar assim mesmo</strong>.
+        Dê dois cliques no arquivo. O instalador ainda não tem assinatura digital, então o Windows pode avisar “O
+        Windows protegeu o computador”: clique em <strong>Mais informações</strong> e depois em{' '}
+        <strong>Executar assim mesmo</strong>. Se ele perguntar se o app pode fazer alterações, clique em{' '}
+        <strong>Sim</strong>.
       </>
     ),
   },
@@ -193,7 +203,7 @@ const AFTER: { icon: ReactNode; title: string; text: ReactNode }[] = [
     title: 'Abra o Nicx',
     text: (
       <>
-        Procure por <strong>Nicx</strong> no menu Iniciar. Na primeira vez, ele pergunta se você quer ajudar com
+        Procure por <strong>Nicx</strong> no menu Iniciar (no Mac, em Aplicativos ou no Spotlight). Na primeira vez, ele pergunta se você quer ajudar com
         estatísticas anônimas. Responda como preferir: nada muda no funcionamento.
       </>
     ),
@@ -213,7 +223,7 @@ const AFTER: { icon: ReactNode; title: string; text: ReactNode }[] = [
     title: 'Ligue a voz',
     text: (
       <>
-        Clique no microfone para falar e permita o acesso quando o Windows pedir. Para conversar sem usar as mãos,
+        Clique no microfone para falar e permita o acesso quando o sistema pedir. Para conversar sem usar as mãos,
         ative o modo <strong>conversa por voz</strong>.
       </>
     ),
@@ -231,6 +241,15 @@ const AFTER: { icon: ReactNode; title: string; text: ReactNode }[] = [
 ];
 
 const TROUBLE: AccordionItem[] = [
+  {
+    q: 'Apareceu “O Windows protegeu o computador”',
+    a: (
+      <>
+        É o Windows SmartScreen: o instalador ainda não tem assinatura digital. Se você baixou o NicxSetup.exe por
+        este site, clique em <strong>Mais informações</strong> e depois em <strong>Executar assim mesmo</strong>.
+      </>
+    ),
+  },
   {
     q: 'Aparece um erro de memória ou o modelo não carrega',
     a: (
@@ -281,6 +300,117 @@ const TROUBLE: AccordionItem[] = [
   },
 ];
 
+/* ── Mac ─────────────────────────────────────────────────────────── */
+
+const MAC_STEPS: { icon: ReactNode; title: string; text: ReactNode }[] = [
+  {
+    icon: <Terminal className="size-4" />,
+    title: 'Abra o Terminal',
+    text: (
+      <>
+        Aperte <kbd>⌘</kbd> + <kbd>Espaço</kbd>, digite <strong>Terminal</strong> e aperte <kbd>Enter</kbd>.
+      </>
+    ),
+  },
+  {
+    icon: <Download className="size-4" />,
+    title: 'Cole o comando',
+    text: (
+      <>
+        Copie o comando abaixo, cole no Terminal e aperte <kbd>Enter</kbd>. Ele não pede senha de administrador.
+        Copie sempre daqui, nunca de outros sites.
+      </>
+    ),
+  },
+  {
+    icon: <AppWindow className="size-4" />,
+    title: 'Abra o app Nicx',
+    text: (
+      <>
+        Quando terminar, o Nicx aparece em <strong>Aplicativos</strong>, dentro da sua pasta de usuário. Também dá
+        para abrir pelo Spotlight.
+      </>
+    ),
+  },
+];
+
+const KBD =
+  '[&_kbd]:rounded [&_kbd]:border [&_kbd]:border-line-strong [&_kbd]:bg-surface [&_kbd]:px-1.5 [&_kbd]:py-0.5 [&_kbd]:font-sans [&_kbd]:text-[13px] [&_kbd]:text-ink';
+
+function MacSection() {
+  const [voice, setVoice] = useState(false);
+  const voiceId = useId();
+  return (
+    <section id="no-mac" className="container-site scroll-mt-24 pt-28 sm:pt-32" aria-labelledby="no-mac-titulo">
+      <div className="grid gap-12 lg:grid-cols-[0.8fr_1.4fr] lg:gap-16">
+        <SectionHeader
+          id="no-mac-titulo"
+          align="left"
+          eyebrow="No Mac"
+          title="Um comando no Terminal."
+          lead="O instalador confere o seu Mac, baixa só o que falta e cria o app Nicx."
+          className="lg:sticky lg:top-28 lg:self-start"
+        />
+        <Reveal className="min-w-0">
+          <ol className="flex flex-col gap-6">
+            {MAC_STEPS.map((s, i) => (
+              <li key={s.title} className="flex gap-5">
+                <span className="relative grid size-11 shrink-0 place-items-center rounded-full border border-line-strong bg-surface text-[15px] font-semibold text-ink shadow-card tabular-nums">
+                  {i + 1}
+                </span>
+                <div className="min-w-0 pt-1.5">
+                  <h3 className="flex items-center gap-2 text-[18px] font-semibold tracking-[-0.015em] text-ink">
+                    {s.title}
+                    <span className="text-subtle" aria-hidden="true">
+                      {s.icon}
+                    </span>
+                  </h3>
+                  <p
+                    className={cn(
+                      'mt-2 max-w-xl text-[15.5px] leading-relaxed text-muted [&_strong]:font-medium [&_strong]:text-ink',
+                      KBD,
+                    )}
+                  >
+                    {s.text}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div className="card mt-8 min-w-0 p-5 sm:p-6">
+            <p className="flex items-center gap-2 text-[14px] font-medium text-ink">
+              <AppleGlyph className="size-4" />
+              Comando de instalação
+            </p>
+            <CommandBox command={voice ? MAC_INSTALL_COMMAND_VOICE : MAC_INSTALL_COMMAND} className="mt-3" />
+            <label htmlFor={voiceId} className="mt-4 flex cursor-pointer items-start gap-2.5 text-[14.5px] text-ink">
+              <input
+                id={voiceId}
+                type="checkbox"
+                checked={voice}
+                onChange={(e) => setVoice(e.target.checked)}
+                className="mt-0.5 size-4 shrink-0 accent-[var(--accent)]"
+              />
+              Incluir a voz: falar e ouvir em português (download maior)
+            </label>
+            <p className="mt-4 text-[13.5px] leading-snug text-muted">{MAC_REQUIREMENTS}</p>
+            <p className="mt-4 flex items-start gap-2 border-t border-line pt-4 text-[14px] leading-snug text-muted">
+              <Trash2 className="mt-0.5 size-4 shrink-0 text-subtle" aria-hidden="true" />
+              <span>
+                Para desinstalar, rode{' '}
+                <code className="rounded bg-surface-2 px-1 py-0.5 font-mono text-[13px] whitespace-nowrap text-ink">
+                  nicx-uninstall
+                </code>{' '}
+                no Terminal.
+              </span>
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ── Page ────────────────────────────────────────────────────────── */
 
 export function InstallPage() {
@@ -306,11 +436,18 @@ export function InstallPage() {
               className="rise mt-6 max-w-xl text-[17px] leading-relaxed text-pretty text-muted sm:text-[19px]"
               style={{ animationDelay: '160ms' }}
             >
-              O <strong className="font-medium text-ink">NicxSetup.exe</strong> vai preparar o seu computador sozinho:
-              confere o que você já tem e instala só o que falta. Sem terminal e sem configuração.
+              O <strong className="font-medium text-ink">NicxSetup.exe</strong> prepara o seu computador sozinho:
+              confere o que você já tem e instala só o que falta. Sem terminal e sem configuração. No Mac, é um comando
+              só.
             </p>
             <div className="rise relative z-10 mt-8 flex flex-col items-start gap-3" style={{ animationDelay: '240ms' }}>
-              <DownloadButton size="lg" />
+              <div className="flex flex-col items-start gap-3 sm:flex-row">
+                <DownloadButton size="lg" />
+                <ButtonLink href="#no-mac" variant="secondary" className="h-12 px-6 text-base">
+                  <AppleGlyph className="size-4" />
+                  Instalar no Mac
+                </ButtonLink>
+              </div>
               <p className="text-[13.5px] text-muted">Windows 10 e 11 (64 bits) · cerca de 7,5 GB de download com voz</p>
             </div>
           </div>
@@ -412,7 +549,7 @@ export function InstallPage() {
           <SectionHeader
             id="passos-titulo"
             align="left"
-            eyebrow="Passo a passo"
+            eyebrow="Passo a passo no Windows"
             title="Cinco passos, poucos cliques."
             lead="Do download à primeira conversa, sem abrir terminal nem mexer em configurações."
             className="lg:sticky lg:top-28 lg:self-start"
@@ -442,6 +579,8 @@ export function InstallPage() {
           </ol>
         </div>
       </section>
+
+      <MacSection />
 
       {/* After installing */}
       <section id="depois" className="container-site pt-28 sm:pt-32" aria-labelledby="depois-titulo">
@@ -501,7 +640,7 @@ export function InstallPage() {
           <div className="card flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
             <div className="flex flex-wrap gap-x-8 gap-y-3 text-[14.5px] text-muted">
               <span className="inline-flex items-center gap-2">
-                <AppWindow className="size-4 text-accent" aria-hidden="true" /> Windows 10 ou 11, 64 bits
+                <AppWindow className="size-4 text-accent" aria-hidden="true" /> Windows 10 ou 11 (64 bits) ou macOS 14+
               </span>
               <span className="inline-flex items-center gap-2">
                 <MemoryStick className="size-4 text-accent" aria-hidden="true" /> 16 GB de RAM (8 GB com modelo menor)

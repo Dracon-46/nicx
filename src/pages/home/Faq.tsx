@@ -70,11 +70,21 @@ const ITEMS: AccordionItem[] = [
     ),
   },
   {
-    q: 'Quando o instalador fica pronto?',
+    q: 'Como eu instalo?',
     a: (
       <>
-        Em breve. O <strong>NicxSetup.exe</strong> vai conferir o seu computador e instalar só o que faltar. Veja{' '}
-        <a href={PAGE_HREF.install}>como vai funcionar a instalação</a>.
+        No Windows, baixe o <strong>NicxSetup.exe</strong> pelo botão <strong>Baixar para Windows</strong>: ele confere
+        o seu computador e instala só o que falta. No Mac, é um comando no Terminal. Veja o{' '}
+        <a href={PAGE_HREF.install}>passo a passo da instalação</a>.
+      </>
+    ),
+  },
+  {
+    q: 'O Windows disse que “protegeu o computador”. E agora?',
+    a: (
+      <>
+        O instalador ainda não tem assinatura digital, então o Windows SmartScreen avisa ao abrir. Se você baixou por
+        este site, clique em <strong>Mais informações</strong> e depois em <strong>Executar assim mesmo</strong>.
       </>
     ),
   },
