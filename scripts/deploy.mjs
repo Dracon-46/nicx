@@ -14,8 +14,8 @@ rmSync(join(dist, '.git'), { recursive: true, force: true });
 git('init', '-q', '-b', 'gh-pages');
 git('add', '-A');
 // Sempre na conta pessoal, qualquer que seja o git config da máquina.
-git('-c', 'user.name=Arthur G. Camzano', '-c', 'user.email=arthurgaspare@gmail.com',
-    'commit', '-q', '-m', 'Publicar site');
+git('-c', 'user.name=Arthur Gaspare Camzano', '-c', 'user.email=arthurgaspare@gmail.com',
+    'commit', '-q', '-m', 'chore(deploy): publica o site');
 // Envia com o login da Dracon-46 sem trocar a conta ativa do gh (a do
 // trabalho às vezes fica ativa e o push dá 403).
 git('-c', 'credential.helper=',
