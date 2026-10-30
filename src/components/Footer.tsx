@@ -1,4 +1,5 @@
 import { HOME_SECTIONS, PAGE_HREF, sectionHref, type PageId } from '../site';
+import { FalkyriaLogo, FALKYRIA_URL } from './FalkyriaLogo';
 import { Logo } from './Header';
 
 export function Footer({ page }: { page: PageId }) {
@@ -57,10 +58,15 @@ export function Footer({ page }: { page: PageId }) {
       <div className="border-t border-line">
         <div className="container-site flex flex-col gap-2 py-6 text-[13px] text-subtle sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Falkyria. Todos os direitos reservados.</p>
-          <p className="inline-flex items-center gap-2">
-            <span className="size-1.5 rounded-full bg-amber" aria-hidden="true" />
-            Nicx é um projeto Falkyria, feito no Brasil.
-          </p>
+          <a
+            href={FALKYRIA_URL}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center gap-2 transition-colors hover:text-ink"
+          >
+            <FalkyriaLogo className="h-5 w-auto text-ink" />
+            Um produto Falkyria, feito no Brasil.
+          </a>
         </div>
       </div>
     </footer>
